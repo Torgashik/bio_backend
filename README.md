@@ -16,7 +16,6 @@
 - SQLite
 - SQLAlchemy
 - JWT
-- Pandas (для анализа данных)
 
 ## Установка и запуск
 
