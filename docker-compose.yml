@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+    environment:
+      - DATABASE_URL=sqlite:///./app.db
+    command: uvicorn src.app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./src:/app/src
+      - ./test_reports:/app/test_reports
+    environment:
+      - TESTING=true
+      - DATABASE_URL=sqlite:///:memory:
+    command: pytest -v --cov=src --cov-report=html:test_reports/coverage src/tests/ 
